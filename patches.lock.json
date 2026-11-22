@@ -1,0 +1,17 @@
+{
+    "_hash": "cb54c78db4b5c2dc8bb6f2d1f0e1394feb0e2ee73bd4af8a36301b7160103162",
+    "patches": {
+        "drupal/sqlsrv": [
+            {
+                "package": "drupal/sqlsrv",
+                "description": "Detect Azure SQL via EngineEdition and SQL Database edition",
+                "url": "patches/sqlsrv-azure-edition.patch",
+                "sha256": "8e1f455cbea397e41271342e65c0e6d2e020b7c50f7dfab669cf620c125e4ac7",
+                "depth": 1,
+                "extra": {
+                    "provenance": "root"
+                }
+            }
+        ]
+    }
+}

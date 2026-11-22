@@ -1,0 +1,19 @@
+--- a/src/Driver/Database/sqlsrv/Install/Tasks.php
++++ b/src/Driver/Database/sqlsrv/Install/Tasks.php
+@@ -72,12 +72,14 @@ class Tasks extends InstallTasks {
+       $connection = Database::getConnection();
+ 
+       // Check if this is Azure SQL Database.
+-      $edition_result = $connection->query("SELECT SERVERPROPERTY('Edition') AS Edition")->fetchObject();
++      $edition_result = $connection->query("SELECT SERVERPROPERTY('Edition') AS Edition, SERVERPROPERTY('EngineEdition') AS EngineEdition")->fetchObject();
+       $edition = $edition_result->Edition ?? '';
++      $engine_edition = (int) ($edition_result->EngineEdition ?? 0);
+ 
+       // Azure SQL Database editions include "SQL Azure" or "SQL Database".
++      // EngineEdition 5 is Azure SQL Database and 8 is Azure SQL Managed Instance.
+       // These are always up-to-date, so skip version check.
+-      if (stripos($edition, 'SQL Azure') !== FALSE || stripos($edition, 'Azure') !== FALSE) {
++      if (stripos($edition, 'SQL Azure') !== FALSE || stripos($edition, 'Azure') !== FALSE || stripos($edition, 'SQL Database') !== FALSE || in_array($engine_edition, [5, 8], TRUE)) {
+         $this->pass(t('Azure SQL detected (Edition: @edition). Version check skipped (Azure is always up-to-date).', [
+           '@edition' => $edition,
+         ]));
