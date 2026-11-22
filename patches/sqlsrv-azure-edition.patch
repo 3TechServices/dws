@@ -1,6 +1,20 @@
 --- a/src/Driver/Database/sqlsrv/Install/Tasks.php
 +++ b/src/Driver/Database/sqlsrv/Install/Tasks.php
-@@ -72,12 +72,14 @@ class Tasks extends InstallTasks {
+@@ -58,6 +58,13 @@ class Tasks extends InstallTasks {
+     return '13.0';
+   }
+ 
++  /**
++   * {@inheritdoc}
++   */
++  protected function checkEngineVersion() {
++    $this->checkDatabaseVersion();
++  }
++
+   /**
+    * Check if the database version meets minimum requirements.
+    *
+@@ -72,12 +79,14 @@ class Tasks extends InstallTasks {
        $connection = Database::getConnection();
  
        // Check if this is Azure SQL Database.
