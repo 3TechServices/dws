@@ -911,6 +911,14 @@ $settings['trusted_host_patterns'] = [
   '^.+\.azurewebsites\.net$',
 ];
 
+$settings['reverse_proxy'] = TRUE;
+$settings['reverse_proxy_addresses'] = [$_SERVER['REMOTE_ADDR'] ?? '127.0.0.1'];
+$settings['reverse_proxy_trusted_headers'] =
+  \Symfony\Component\HttpFoundation\Request::HEADER_X_FORWARDED_FOR |
+  \Symfony\Component\HttpFoundation\Request::HEADER_X_FORWARDED_HOST |
+  \Symfony\Component\HttpFoundation\Request::HEADER_X_FORWARDED_PORT |
+  \Symfony\Component\HttpFoundation\Request::HEADER_X_FORWARDED_PROTO;
+
 if (getenv('AZURE_SQL_HOST')) {
   $databases['default']['default'] = [
     'database' => getenv('AZURE_SQL_DB'),
