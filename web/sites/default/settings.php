@@ -906,6 +906,7 @@ $settings['migrate_node_migrate_type_classic'] = FALSE;
 
 $settings['hash_salt'] = getenv('DRUPAL_HASH_SALT') ?: 'temp-poc-salt-change-in-azure';
 $settings['config_sync_directory'] = '../config/sync';
+$settings['skip_permissions_hardening'] = TRUE;
 $settings['trusted_host_patterns'] = [
   '^drupalazure-poc\.azurewebsites\.net$',
   '^.+\.azurewebsites\.net$',
