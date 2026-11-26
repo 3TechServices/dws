@@ -1,0 +1,26 @@
+--- a/src/Driver/Database/sqlsrv/Schema.php
++++ b/src/Driver/Database/sqlsrv/Schema.php
+@@ -1686,7 +1686,22 @@
+     // Database is defaulted from active connection.
+     $options = $this->connection->getConnectionOptions();
+     $database = $options['database'];
+-    return $this->connection->query($sql, [':database' => $database])->fetchObject();
++    try {
++      return $this->connection->query($sql, [':database' => $database])->fetchObject();
++    }
++    catch (\Exception $e) {
++      // Azure SQL Database does not expose sys.master_files; fall back to sys.database_files.
++      $azure_sql = <<< EOF
++        SELECT
++      DB_NAME() DatabaseName,
++      (CAST(SUM(CASE WHEN type = 0 THEN size ELSE 0 END) AS FLOAT)*8)/1024 RowSizeMB,
++      (CAST(SUM(CASE WHEN type = 1 THEN size ELSE 0 END) AS FLOAT)*8)/1024 LogSizeMB,
++      (CAST(SUM(CASE WHEN type = 2 THEN size ELSE 0 END) AS FLOAT)*8)/1024 StreamSizeMB,
++      (CAST(SUM(CASE WHEN type = 4 THEN size ELSE 0 END) AS FLOAT)*8)/1024 TextIndexSizeMB
++  FROM sys.database_files
++EOF;
++      return $this->connection->query($azure_sql)->fetchObject();
++    }
+   }
+ 
+   /**

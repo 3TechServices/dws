@@ -47,7 +47,8 @@
     "extra": {
         "patches": {
             "drupal/sqlsrv": {
-                "Detect Azure SQL via EngineEdition and SQL Database edition": "patches/sqlsrv-azure-edition.patch"
+                "Detect Azure SQL via EngineEdition and SQL Database edition": "patches/sqlsrv-azure-edition.patch",
+                "Fallback to sys.database_files for Azure SQL in Schema::getSizeInfo": "patches/sqlsrv-azure-size-info.patch"
             }
         },
         "drupal-scaffold": {

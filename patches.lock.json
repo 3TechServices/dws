@@ -1,5 +1,5 @@
 {
-    "_hash": "5cc51ada933f8ffb3cb37b92ee326d5aabbfc14d3cd39efe860861c6c130732a",
+    "_hash": "a3076551535e13a89028b6e076d73679930ba876c3bfbb71b604a306bfddd49e",
     "patches": {
         "drupal/sqlsrv": [
             {
@@ -7,6 +7,16 @@
                 "description": "Detect Azure SQL via EngineEdition and SQL Database edition",
                 "url": "patches/sqlsrv-azure-edition.patch",
                 "sha256": "377f2046326f82d041357c72ae7afc625ba168c3c8ab45588559a667d027bfa9",
+                "depth": 1,
+                "extra": {
+                    "provenance": "root"
+                }
+            },
+            {
+                "package": "drupal/sqlsrv",
+                "description": "Fallback to sys.database_files for Azure SQL in Schema::getSizeInfo",
+                "url": "patches/sqlsrv-azure-size-info.patch",
+                "sha256": "f95af04d8a4753a1207f771731325ab864cfa6b3aaacaf5ea016c2786c41af06",
                 "depth": 1,
                 "extra": {
                     "provenance": "root"
